@@ -1,15 +1,20 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "./ThemeProvider";
 
 const LocalThemedBox = () => {
-  const { theme } = useContext(ThemeContext);
-  const [localTheme, setLocalTheme] = useState(theme);
+  const { theme: globalTheme } = useContext(ThemeContext);
+  const [localTheme, setLocalTheme] = useState(globalTheme);
 
   const toggleLocalTheme = () => {
     setLocalTheme((prevLocalTheme) =>
       prevLocalTheme === "light" ? "dark" : "light"
     );
   };
+
+  // Update local theme when global theme changes
+  useEffect(() => {
+    setLocalTheme(globalTheme);
+  }, [globalTheme]);
 
   return (
     <div
